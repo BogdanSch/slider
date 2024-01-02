@@ -1,0 +1,42 @@
+#wrap {
+    width: 520px;
+    height: 360px;
+    overflow: hidden;
+}
+
+#wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.slider {
+    position: relative;
+}
+
+.slider__image {
+    transition: all .5s ease;
+    position: relative
+}
+
+.slider__minies {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    column-gap: 6px;
+}
+
+.mini {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.fade {
+    opacity: 0;
+}
+
+.go {
+    left: 520px;
+}
