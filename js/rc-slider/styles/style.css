@@ -16,7 +16,8 @@
 
 .slider__image {
     transition: all .5s ease;
-    position: relative
+    position: relative;
+    left: 0;
 }
 
 .slider__minies {

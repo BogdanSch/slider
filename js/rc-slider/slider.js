@@ -101,6 +101,8 @@ if (sliderConfig.showMiniatures) {
     let imageFullName = imageMini.getAttribute("data-sl-img");
     addEffect();
     setTimeout(clearEffects, animationDuration);
-    sliderImage.src = `./images/${imageFullName}`;
+    setTimeout(() => {
+      sliderImage.src = `./images/${imageFullName}`;
+    }, animationDuration / 2);
   }
 }
