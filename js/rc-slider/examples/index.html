@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slider Prototype</title>
+    <link rel="stylesheet" href="./js/rc-slider/styles/style.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <section class="slider">
+            <div class="container mt-3">
+                <h1 class="text-center">Slider Prototype</h1>
+                <div class="slider d-flex flex-column justify-content-center align-items-center">
+                    <div id="wrap" class="text-center">
+                        <img id="sliderImage" class="slider__image" src="./images/flowers.jpg">
+                    </div>
+                    <div class="slider__minies mt-1">
+                    </div>
+                    <div class="slider__arrows text-center mt-2">
+                        <button id="prev" class="btn btn-outline-info">&lt;</button>
+                        <button id="next" class="btn btn-outline-info">&gt;</button>
+                    </div>
+                    <div class="slider__buttons text-center mt-2">
+                        <button id="start" class="btn btn-outline-primary">Start</button>
+                        <button id="stop" class="btn btn-outline-primary">Stop</button>
+                    </div>
+                    <form class="slider__effects effects-form mt-5 mb-5 text-center" action="" method="dialog"
+                        name="effects">
+                        <h2 class="effcts-form__title">Effects Form</h2>
+                        <div class="form-check">
+                            <input type="radio" name="effect" value="none" class="form-check-input" id="effectNone"
+                                checked />
+                            <label class="form-check-label" for="effectNone">
+                                Effect none
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input type="radio" name="effect" value="go" class="form-check-input" id="effectGo" />
+                            <label class="form-check-label" for="effectGo">
+                                Effect go
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input type="radio" name="effect" value="fade" class="form-check-input" id="effectFade" />
+                            <label class="form-check-label" for="effectFade">
+                                Effect fade
+                            </label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script src="./js/script.js"></script>
+    <script type="module" src="./js/rc-slider/main.js" defer></script>
+</body>
+
+</html>
