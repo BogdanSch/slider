@@ -1,108 +1,117 @@
-"use strict";
+export class Slider {
+  constructor(config) {
+    this.imagePathes = config.imagePathes;
+    this.currentSlide = 0;
+    this.timer;
+    this.effect = "none";
+    this.allEffects = [];
+    this.animationDuration = config.animationDuration;
+    this.autoplayDuration = config.autoplayDuration;
 
-let imagePathes = sliderConfig.imagePathes;
+    this.sliderImage = document.getElementById("sliderImage");
+    this.nextButton = document.getElementById("next");
+    this.previousButton = document.getElementById("prev");
+    this.startSlideshowButton = document.getElementById("start");
+    this.stopSlideshowButton = document.getElementById("stop");
+    this.effectsForm = document.forms.effects;
+    this.miniaturesContainer = document.querySelector(".slider__minies");
+    this.miniatures = [];
 
-let currentSlide = 0;
-let timer;
-let effect = "none";
-let allEffects = [];
-let animationDuration = sliderConfig.animationDuration;
-
-const sliderImage = document.getElementById("sliderImage");
-const nextButton = document.getElementById("next");
-const previousButton = document.getElementById("prev");
-
-const startSlideshowButton = document.getElementById("start");
-const stopSlideshowButton = document.getElementById("stop");
-
-const effectsForm = document.forms.effects;
-const miniaturesContainer = document.querySelector(".slider__minies");
-let miniatures = [];
-
-for (let i = 0; i < effectsForm.length; i++) {
-  allEffects.push(effectsForm[i].value);
-  effectsForm[i].addEventListener("change", (event) => {
-    clearEffects();
-    if (effectsForm[i].checked) {
-      effect = effectsForm[i].value;
+    for (let i = 0; i < this.effectsForm.length; i++) {
+      this.allEffects.push(this.effectsForm[i].value);
+      this.effectsForm[i].addEventListener("change", (event) => {
+        this.clearEffects();
+        if (this.effectsForm[i].checked) {
+          this.effect = this.effectsForm[i].value;
+        }
+      });
     }
-  });
-}
 
-function addEffect() {
-  sliderImage.classList.add(effect);
-}
+    this.nextButton.addEventListener("click", () => this.showNextSlide());
+    this.previousButton.addEventListener("click", () =>
+      this.showPreviousSlide()
+    );
+    this.startSlideshowButton.addEventListener("click", () =>
+      this.startSlideshow()
+    );
+    this.stopSlideshowButton.addEventListener("click", () =>
+      this.stopSlideshow()
+    );
 
-function clearEffects() {
-  for (const effect of allEffects) {
-    sliderImage.classList.remove(effect);
+    if (config.showMiniatures) {
+      this.generateMiniatures();
+
+      this.miniatures.forEach((miniature) => {
+        miniature.addEventListener("click", (event) =>
+          this.showNextSlideByMiniature(event)
+        );
+      });
+    }
   }
-}
 
-nextButton.addEventListener("click", showNextSlide);
-previousButton.addEventListener("click", showPreviousSlide);
-startSlideshowButton.addEventListener("click", startSlideshow);
-stopSlideshowButton.addEventListener("click", stopSlideshow);
-
-function startSlideshow() {
-  stopSlideshow();
-  timer = setInterval(showNextSlide, 3000);
-}
-function stopSlideshow() {
-  clearInterval(timer);
-}
-
-function showNextSlide() {
-  addEffect();
-  setTimeout(() => {
-    currentSlide++;
-    if (currentSlide >= imagePathes.length) {
-      currentSlide = 0;
-    }
-    sliderImage.src = imagePathes[currentSlide];
-  }, animationDuration / 2);
-  setTimeout(clearEffects, animationDuration);
-}
-
-function showPreviousSlide() {
-  addEffect();
-  setTimeout(() => {
-    currentSlide--;
-    if (currentSlide <= 0) {
-      currentSlide = imagePathes.length - 1;
-    }
-    sliderImage.src = imagePathes[currentSlide];
-  }, animationDuration / 2);
-  setTimeout(clearEffects, animationDuration);
-}
-
-function generateMiniatures() {
-  for (let i = 0; i < imagePathes.length; i++) {
-    const imageFullName = imagePathes[i].split("/")[2];
-    const image = document.createElement("img");
-    image.src = imagePathes[i];
-    image.alt = imageFullName;
-    image.className = "mini";
-    image.setAttribute("data-sl-img", imageFullName);
-    miniaturesContainer.appendChild(image);
-    miniatures.push(image);
+  addEffect() {
+    this.sliderImage.classList.add(this.effect);
   }
-}
 
-if (sliderConfig.showMiniatures) {
-  generateMiniatures();
+  clearEffects() {
+    for (const effect of this.allEffects) {
+      this.sliderImage.classList.remove(effect);
+    }
+  }
 
-  miniatures.forEach((miniature) => {
-    miniature.addEventListener("click", showNextSlideByMiniature);
-  });
+  startSlideshow() {
+    this.stopSlideshow();
+    this.timer = setInterval(() => this.showNextSlide(), this.autoplayDuration);
+  }
 
-  function showNextSlideByMiniature(event) {
+  stopSlideshow() {
+    clearInterval(this.timer);
+  }
+
+  showNextSlide() {
+    this.addEffect();
+    setTimeout(() => {
+      this.currentSlide++;
+      if (this.currentSlide >= this.imagePathes.length) {
+        this.currentSlide = 0;
+      }
+      this.sliderImage.src = this.imagePathes[this.currentSlide];
+    }, this.animationDuration / 2);
+    setTimeout(() => this.clearEffects(), this.animationDuration);
+  }
+
+  showPreviousSlide() {
+    this.addEffect();
+    setTimeout(() => {
+      this.currentSlide--;
+      if (this.currentSlide < 0) {
+        this.currentSlide = this.imagePathes.length - 1;
+      }
+      this.sliderImage.src = this.imagePathes[this.currentSlide];
+    }, this.animationDuration / 2);
+    setTimeout(() => this.clearEffects(), this.animationDuration);
+  }
+
+  generateMiniatures() {
+    for (let i = 0; i < this.imagePathes.length; i++) {
+      const imageFullName = this.imagePathes[i].split("/")[2];
+      const image = document.createElement("img");
+      image.src = this.imagePathes[i];
+      image.alt = imageFullName;
+      image.className = "mini";
+      image.setAttribute("data-sl-img", imageFullName);
+      this.miniaturesContainer.appendChild(image);
+      this.miniatures.push(image);
+    }
+  }
+
+  showNextSlideByMiniature(event) {
     let imageMini = event.target;
     let imageFullName = imageMini.getAttribute("data-sl-img");
-    addEffect();
-    setTimeout(clearEffects, animationDuration);
+    this.addEffect();
+    setTimeout(() => this.clearEffects(), this.animationDuration);
     setTimeout(() => {
-      sliderImage.src = `./images/${imageFullName}`;
-    }, animationDuration / 2);
+      this.sliderImage.src = `./images/${imageFullName}`;
+    }, this.animationDuration / 2);
   }
 }

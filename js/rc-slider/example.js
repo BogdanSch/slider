@@ -1,5 +1,3 @@
-"use strict";
-
 const sliderConfig = {
   imagePathes: [
     "./images/flowers.jpg",
@@ -10,5 +8,4 @@ const sliderConfig = {
   ],
   showMiniatures: true,
   animationDuration: 1000,
-  autoplayDuration: 3000,
 };
