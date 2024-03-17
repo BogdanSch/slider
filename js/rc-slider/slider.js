@@ -7,7 +7,9 @@ export class Slider {
     this.allEffects = [];
     this.animationDuration = config.animationDuration;
     this.autoplayDuration = config.autoplayDuration;
-
+    this.showMiniatures = config.showMiniatures;
+  }
+  init() {
     this.sliderImage = document.getElementById("sliderImage");
     this.nextButton = document.getElementById("next");
     this.previousButton = document.getElementById("prev");
@@ -38,7 +40,7 @@ export class Slider {
       this.stopSlideshow()
     );
 
-    if (config.showMiniatures) {
+    if (this.showMiniatures) {
       this.generateMiniatures();
 
       this.miniatures.forEach((miniature) => {
